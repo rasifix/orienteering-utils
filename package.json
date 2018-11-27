@@ -1,0 +1,14 @@
+{
+  "name": "@rasifix/orienteering-utils",
+  "version": "1.0.0",
+  "description": "utility functions for orienteering result analyzis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "orienteering"
+  ],
+  "author": "Simon Raess <raess.simon@gmail.com>",
+  "license": "Apache-2.0"
+}
