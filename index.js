@@ -1,5 +1,5 @@
-import oware from './lib/oware';
-import kraemer from './lib/kraemer';
+var oware = require('./lib/oware');
+var kraemer = require('./lib/kraemer');
 
 module.exports = {
     oware: oware,
