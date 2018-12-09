@@ -1,7 +1,11 @@
-var oware = require('./lib/oware');
-var kraemer = require('./lib/kraemer');
+const oware = require('./lib/oware');
+const kraemer = require('./lib/kraemer');
+const solv = require('./lib/solv');
+const time = require('./lib/time');
 
 module.exports = {
     oware: oware,
-    kraemer: kraemer
+    kraemer: kraemer,
+    solv: solv,
+    time: time
 };

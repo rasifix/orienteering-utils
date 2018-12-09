@@ -64,5 +64,19 @@ describe('oware', function() {
                 runner.rank.should.equal(1);
             });
         });
+
+        describe('category L', function() {
+            var category;
+
+            before(function() {
+                category = event.categories[1];
+            });
+
+            it('should have a category L with 33 runners', function() {
+                category.should.be.an('object');
+                category.name.should.equal('L');
+                category.runners.length.should.equal(33);
+            });
+        });
     });
 });
