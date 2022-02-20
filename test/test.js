@@ -7,4 +7,5 @@ function importTest(name, path) {
 describe('all tests', function() {
     importTest('oware', './oware-test.js');
     importTest('solv', './solv-test.js');
+    importTest('ranking', './ranking-test.js');
 });
