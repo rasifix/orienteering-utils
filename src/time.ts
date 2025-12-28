@@ -1,4 +1,4 @@
-function pad(value) {
+function pad(value:number) {
     return value < 10 ? '0' + value : value;
 };
   
@@ -12,17 +12,17 @@ var regex = /(-)?[0-9]?[0-9]:[0-9][0-9](:[0-9][0-9])?/;
  * @param str input string
  * @returns the number of seconds in the given input string or null if input is not parseable
  */
-module.exports.parseTime = function(str) {
+export function parseTime(str:string|undefined):number|undefined {
     if (!str) {
-        return null;
+        return undefined;
     } else if (typeof str !== 'string') {
-        return null;
+        return undefined;
     } else if (!regex.test(str)) {
-        return null;
+        return undefined;
     }
   
     var split = str.split(":");
-    var result = null;
+    var result:number = NaN;
     if (split.length === 2) {
         var negative = split[0][0] === '-';
         var minutes = parseInt(split[0], 10);
@@ -31,10 +31,13 @@ module.exports.parseTime = function(str) {
         result = parseInt(split[0], 10) * 3600 + parseInt(split[1], 10) * 60 + parseInt(split[2], 10);
     }
     
-    return isNaN(result) ? null : result;
+    return isNaN(result) ? undefined : result;
 }
   
-module.exports.formatTime = function(seconds) {
+export function formatTime(seconds:number|undefined) {
+    if (!seconds) {
+        return undefined;
+    }
     const sign = seconds < 0 ? '-' : '';
     const value = Math.abs(seconds);
     if (value >= 3600) {

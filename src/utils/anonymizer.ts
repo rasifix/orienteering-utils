@@ -1,9 +1,12 @@
+import { Competition } from "../model/competition";
+import { Sex } from "../model/runner";
+
 const names = [
     'Gustavson', 'Hendrikson', 'Meyer', 'Marlovic', 'Torres', 'Huber',
     'Wüst', 'Zürcher', 'Berner', 'Rufer', 'Gutmann', 'Hübscher',
     'Schneller', 'Widemar', 'Rohrer', 'Kunz', 'Kinzle', 'Steinle',
     'Allemann', 'Röhrig', 'Meyer', 'Uhlmann', 'Garaio', 'Regazoni',
-    'Maudet', 'Zoja'
+    'Maudet', 'Zoja', 'Scheller', 'Beckenbauer', 'Würsten'
 ];
 
 const firstNames = {
@@ -16,17 +19,17 @@ const firstNames = {
     ],
     m: [
         'Albert', 'Bruno', 'Chris', 'Dirk', 'David', 'Erwin', 'Francesco',
-        'Fritz', 'Gianni', 'Gustav', 'Hans', 'Ian', 'Jan', 'Karl', 'Lars',
+        'Fritz', 'Gianni', 'Gustav', 'Hans', 'Henrik', 'Ian', 'Jan', 'Karl', 'Lars',
         'Martin', 'Marco', 'Markus', 'Nico', 'Nino', 'Otto', 'Olav',
         'Patric', 'Pablo', 'Quentin', 'Ralf', 'Rudolf', 'Simon', 'Steve',
-        'Thomas', 'Tim', 'Urs', 'Udo'
+        'Thomas', 'Tim', 'Urs', 'Udo', 'Zan'
     ]
 };
 
 const cities = [
-    'Aarberg', 'Bern', 'Colombier', 'Diemerswil', 'Elm', 'Fribourg',
-    'Goldiwil', 'Heimiswil', 'Illiswil', 'Konolfingen', 'Lausanne',
-    'Lugano', 'Martigny', 'Neuchatel', 'Orbe', 'Zürich'
+    'Aarberg', 'Bern', 'Burgdorf', 'Colombier', 'Diemerswil', 'Domdidier', 'Elm', 'Flawil', 'Fribourg',
+    'Goldiwil', 'Heimiswil', 'Hergiswil', 'Illiswil', 'Konolfingen', 'Lausanne', 'Locarno',
+    'Lugano', 'Martigny', 'Neuchatel', 'Orbe', 'Uzwil', 'Zürich'
 ];
 
 const clubs = {
@@ -34,39 +37,35 @@ const clubs = {
     names: ['Bernstein', 'Erdmannlistein', 'Blanc', 'Piz Balü', 'Bartli und Most', 'Aare', 'Reuss' ]
 };
 
-function random(arr) {
-    if (arr.lenght === 0) {
-        return null;
-    }
+function random(arr: string[]):string {
     const idx = Math.floor(Math.random() * (arr.length - 1));
     return arr[idx];
 }
 
-function randInt(from, to) {
+function randInt(from: number, to: number) {
     return from + Math.round(Math.random() * (to - from));
 }
 
-module.exports.anonymize = function(event) {
-    event.categories.forEach(category => {
+export function anonymize(competition: Competition) {
+    competition.categories.forEach(category => {
         category.runners.forEach(runner => {
             runner.name = random(names);
 
-            if (runner.sex === 'M' || runner.sex === 'm') {
-                runner.firstName = random(firstNames.m);
-                runner.sex = 'M';
-            } else {
+            if (!runner.sex || runner.sex === 'f') {
                 runner.firstName = random(firstNames.f);
-                runner.sex = 'F';
+                runner.sex = Sex.female;
+            } else {
+                runner.firstName = random(firstNames.m);
+                runner.sex = Sex.male;
             }
 
             runner.fullName = runner.firstName + ' ' + runner.name;
 
             runner.city = random(cities);
             runner.club = random(clubs.prefixes) + ' ' + random(clubs.names);
-            runner.yearOfBirth = randInt(1925, 2010);
+            runner.yearOfBirth = '' + randInt(1925, 2010);
             runner.nation = 'SUI';
-            runner.ecard = Math.round(Math.random() * 1000000);
         });
     });
-    return event;
+    return competition;
 };
