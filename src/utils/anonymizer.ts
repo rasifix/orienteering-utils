@@ -49,17 +49,13 @@ function randInt(from: number, to: number) {
 export function anonymize(competition: Competition) {
     competition.categories.forEach(category => {
         category.runners.forEach(runner => {
-            runner.name = random(names);
-
             if (!runner.sex || runner.sex === 'f') {
-                runner.firstName = random(firstNames.f);
+                runner.fullName = random(firstNames.f) + ' ' + random(names);
                 runner.sex = Sex.female;
             } else {
-                runner.firstName = random(firstNames.m);
+                runner.fullName = random(firstNames.m) + ' ' + random(names);
                 runner.sex = Sex.male;
             }
-
-            runner.fullName = runner.firstName + ' ' + runner.name;
 
             runner.city = random(cities);
             runner.club = random(clubs.prefixes) + ' ' + random(clubs.names);

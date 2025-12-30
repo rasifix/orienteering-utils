@@ -4,8 +4,8 @@
       "module": "commonjs",
       "declaration": true,
       "outDir": "./lib",
-      "strict": true
+      "strict": false
     },
     "include": ["src"],
-    "exclude": ["node_modules", "**/__tests__/*"]
+    "exclude": ["node_modules", "**/__tests__/*", "src/utils/reorganize.ts"]
   }

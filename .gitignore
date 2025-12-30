@@ -5,3 +5,4 @@ node_modules
 
 bbn.js
 test/butterfly-oware-orig.csv
+lib/

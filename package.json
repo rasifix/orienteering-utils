@@ -1,6 +1,6 @@
 {
   "name": "@rasifix/orienteering-utils",
-  "version": "2.0.1",
+  "version": "2.0.16",
   "description": "utility functions for orienteering result analyzis",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -28,8 +28,8 @@
   "devDependencies": {
     "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^16.0.2",
+    "@types/node": "^22.10.5",
     "ts-node": "^10.9.2",
-    "typescript": "^4.5.5"
+    "typescript": "^5.7.3"
   }
 }

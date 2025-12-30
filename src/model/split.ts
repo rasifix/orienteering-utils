@@ -1,4 +1,4 @@
 export interface Split {
     code: string;
-    time: string|undefined;
+    time?: string;
 }

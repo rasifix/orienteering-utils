@@ -1,11 +1,9 @@
 import { Split } from "./split";
 
 export interface Runner {
-  id: number;
+  id: string;
   category: string;
   rank?: number;
-  name: string;
-  firstName: string;
   fullName: string;
   yearOfBirth?: string;
   sex?: Sex;

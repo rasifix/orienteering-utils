@@ -39,10 +39,10 @@ export function formatTime(seconds:number|undefined) {
         return undefined;
     }
     const sign = seconds < 0 ? '-' : '';
-    const value = Math.abs(seconds);
+    const value = Math.abs(Math.round(seconds));
     if (value >= 3600) {
         return sign + Math.floor(value / 3600) + ":" + pad(Math.floor(value / 60) % 60) + ":" + pad(value % 60);
     } else {
-        return Math.floor(value / 60) + ":" + pad(value % 60);
+        return sign + Math.floor(value / 60) + ":" + pad(value % 60);
     }
 }

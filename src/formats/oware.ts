@@ -32,12 +32,10 @@ function parseRunner(row: string[], category: string, id: number):Runner {
   }
 
   return {
-    id: id,
+    id: "" + id,
     category: category,
     rank: row[0] ? parseInt(row[0]) : undefined,
-	firstName: row[2],
-	name: row[1],
-    fullName: [row[2], row[1]].join(" "),
+	  fullName: [row[2], row[1]].join(" "),
     yearOfBirth: row[3],
     club: row[8],
     city: row[7],

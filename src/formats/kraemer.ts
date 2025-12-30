@@ -85,8 +85,6 @@ export class KraemerFormater implements Format {
       var runner: Runner = {
         id: lineObj["Melde Id"],
         category: categoryName,
-        firstName: runnerFirstname,
-        name: runnerName,
         fullName: [runnerFirstname, runnerName].join(" "),
         yearOfBirth: lineObj["Jg"],
         club: (strip(lineObj["Abk"]) + " " + strip(lineObj["Club"])).trim(),

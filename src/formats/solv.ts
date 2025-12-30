@@ -60,13 +60,10 @@ export class SolvFormat implements Format {
         categories[categoryName] = category;
       }
 
-      const name = tokens[5].split(" ");
       const runner:Runner = {
-        id: idx,
+        id: "" + idx,
         category: categoryName,
         rank: tokens[4] ? parseInt(tokens[4]) : undefined,
-        firstName: name[0],
-        name: name.slice(1).join(" "),
         fullName: tokens[5],
         yearOfBirth: tokens[6],
         city: tokens[7],
