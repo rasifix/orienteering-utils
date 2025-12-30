@@ -113,6 +113,9 @@ export interface RankingRunner {
   // the unique identifier of this runner
   id: string; 
 
+  // the category of this runner
+  category: string;
+
   // the overall rank of this runner
   rank?: number;
 
@@ -389,6 +392,7 @@ function defineRunners(runners:Runner[]): RankingRunner[] {
     }
     return {
       id: runner.id,
+      category: runner.category,
       rank: undefined,
       fullName: runner.fullName,
       time: runner.time,
