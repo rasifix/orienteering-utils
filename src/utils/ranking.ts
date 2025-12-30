@@ -524,7 +524,7 @@ function defineLegProperties(legs: RunnerLegs) {
       leg.idealSplit = Math.round(selected.reduce(sum, 0) / selected.length);
 
       if (leg.idealSplit < 0 || isNaN(leg.idealSplit)) {
-        console.log("invalid ideal split calculated for leg " + code, leg.idealSplit);
+        console.log("invalid ideal split calculated for leg " + code, leg.idealSplit, selected);
         leg.idealSplit = 30;
       }
     }
