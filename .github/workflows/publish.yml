@@ -45,7 +45,7 @@ jobs:
         run: |
           VERSION=$(node -p "require('./package.json').version")
           git tag -f "v$VERSION" -m "Release v$VERSION"
-          git push origin main --tags
+          git push origin master --tags
 
       - name: Publish to npm
         run: npm publish
