@@ -85,6 +85,20 @@ function assignLegInfoToSplits(runners: RankingRunner[], legs: RunnerLegs): void
 }
 
 function rank(runners: RankingRunner[]) {
+  runners.sort((r1, r2) => {
+    const t1 = parseTime(r1.time);
+    const t2 = parseTime(r2.time);
+
+    if (invalidTime(t1) && invalidTime(t2)) {
+      return 0;
+    } else if (invalidTime(t1)) {
+      return 1;
+    } else if (invalidTime(t2)) {
+      return -1;
+    } else {
+      return t1! - t2!;
+    }
+  });
   runners.forEach((runner, idx) => {
     if (idx === 0) {
       runner.rank = 1;
