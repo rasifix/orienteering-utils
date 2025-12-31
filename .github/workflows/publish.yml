@@ -45,5 +45,13 @@ jobs:
       - name: Push commit and tags
         run: git push origin master --follow-tags
 
+      - name: Dump OIDC claims
+        run: |
+          TOKEN=$(curl -sLS \
+            -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=npm" \
+            | jq -r '.value')
+          echo "$TOKEN" | cut -d '.' -f2 | base64 -d | jq .
+      
       - name: Publish to npm
         run: npm publish --access public --loglevel verbose
