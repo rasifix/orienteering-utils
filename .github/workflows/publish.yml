@@ -97,4 +97,4 @@ jobs:
           echo "✅ Trusted Publisher claims match. OIDC authentication should work."
       
       - name: Publish to npm
-        run: npm publish --access public --loglevel verbose
+        run: npm publish --access public --loglevel verbose --provenance
