@@ -1,6 +1,7 @@
 import { Runner } from "../model/runner";
 import { Split } from "../model/split";
 import { parseTime, formatTime } from "../time";
+import { errorTime } from "./analyzis";
 
 function invalidTime(time:number|undefined) {
   return time === undefined || time < 0;
@@ -81,6 +82,7 @@ function assignLegInfoToSplits(runners: RankingRunner[], legs: RunnerLegs): void
         }
         split.weight = leg.weight;
       });
+    runner.errorTime = errorTime(runner, { thresholdRelative: 1.2, thresholdAbsolute: 10 });
   });
 }
 
@@ -139,6 +141,9 @@ export interface RankingRunner {
   // the overall time of this runner
   time?: string; 
 
+  // the error time of this runner
+  errorTime: string;
+
   // the year of birth of this runner
   yearOfBirth?: string; 
 
@@ -165,6 +170,9 @@ export interface RankingSplit {
 
   // the split time for this leg
   splitTime?: number;
+
+  // time lost on this leg due to errors
+  timeLoss?: number;
 
   overall: RankingInfo;
 
@@ -414,6 +422,7 @@ function defineRunners(runners:Runner[]): RankingRunner[] {
       city: runner.city,
       club: runner.club,
       splits: splits,
+      errorTime: '00:00'
     };
   });
 }
