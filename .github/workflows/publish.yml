@@ -48,4 +48,4 @@ jobs:
           git push origin master --tags
 
       - name: Publish to npm
-        run: npm publish
+        run: npm publish --access public
