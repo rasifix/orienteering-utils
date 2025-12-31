@@ -96,5 +96,11 @@ jobs:
 
           echo "✅ Trusted Publisher claims match. OIDC authentication should work."
       
+      - name: Unset npm token to allow OIDC
+        run: |
+          echo "Removing NODE_AUTH_TOKEN and temp .npmrc"
+          unset NODE_AUTH_TOKEN
+          npm config delete //registry.npmjs.org/:_authToken
+
       - name: Publish to npm
         run: npm publish --access public --loglevel verbose --provenance
