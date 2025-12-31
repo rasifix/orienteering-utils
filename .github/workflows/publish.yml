@@ -103,4 +103,4 @@ jobs:
           npm config delete //registry.npmjs.org/:_authToken
 
       - name: Publish to npm
-        run: npm publish --access public --loglevel verbose --provenance
+        run: npm publish --access public --loglevel verbose 
