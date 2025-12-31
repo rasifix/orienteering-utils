@@ -31,7 +31,7 @@ jobs:
         run: npm ci
 
       - name: Verify npm authentication
-        run: npm whoami
+        run: npm whoami --loglevel=verbose
 
       - name: Build
         run: npm run build
