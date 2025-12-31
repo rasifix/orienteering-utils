@@ -19,7 +19,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rasifix/orienteering-util.git"
+    "url": "https://github.com/rasifix/orienteering-util.git"
   },
   "dependencies": {
     "chai": "^4.3.6",
