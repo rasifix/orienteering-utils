@@ -80,7 +80,7 @@ export class OwareFormat implements Format {
           category = parseCategory(cols);
           competition.categories.push(category);
         } else if (!category) {
-          console.warn("Runner found before category definition, skipping:", line);
+          console.warn("Runner found before category definition, skipping:", cols.length);
         } else {
           category.runners.push(parseRunner(cols, category.name, ++idx));
         }
