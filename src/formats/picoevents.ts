@@ -31,6 +31,8 @@ export class PicoeventsFormat implements Format {
       categories: [],
     };
 
+    console.log("Event Header:", eventHeader);
+
     const header = lines.splice(0, 1)[0].split(",");
 
     const sortKeyIdx = header.indexOf("[SORTKEY]");
