@@ -13,7 +13,6 @@ export function errorTime(runner: RankingRunner, options): string {
     let errorFreeTime = Math.round(split.splitTime * (split.performanceIndex / middle));
     if (split.splitTime / errorFreeTime > thresholdRelative && (split.splitTime - errorFreeTime) > thresholdAbsolute) {        
       split.timeLoss = split.splitTime - errorFreeTime;
-      console.log(`Runner ${runner.fullName} has time loss of ${split.timeLoss}s at split ${split.code}`);
       errorTime += split.timeLoss;
     }
   });
