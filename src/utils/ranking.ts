@@ -554,6 +554,9 @@ function defineLegProperties(legs: RunnerLegs) {
         console.log("invalid ideal split calculated for leg " + code, leg.idealSplit, selected);
         leg.idealSplit = 30;
       }
+    } else {
+      console.log("no valid splits for leg " + code + " found, setting ideal split to 30s");
+      leg.idealSplit = 30;
     }
 
     // only if there are valid splits for this leg
