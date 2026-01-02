@@ -14,7 +14,7 @@ function clean(value: string | undefined): string | undefined {
   return value;
 }
 
-export class OwareFormat implements Format {
+export class PicoeventsFormat implements Format {
   parse(text: string):Competition {
     // convert CSV to JSON
     const categories: { [key: string]: Category } = {};
