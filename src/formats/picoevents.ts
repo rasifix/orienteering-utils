@@ -16,13 +16,12 @@ function clean(value: string | undefined): string | undefined {
 
 export class PicoeventsFormat implements Format {
   parse(text: string):Competition {
-    console.log("Parsing Picoevents format");
-
     // convert CSV to JSON
     const categories: { [key: string]: Category } = {};
 
     const lines = text.split(/\r?\n/);
-    const eventHeader = lines.splice(0, 1);
+    const firstLine = lines.splice(0, 1)[0];
+    const eventHeader = firstLine.split(",");
 
     const result: Competition = {
       id: eventHeader[1],
@@ -32,8 +31,6 @@ export class PicoeventsFormat implements Format {
       startTime: eventHeader[4],
       categories: [],
     };
-
-    console.warn("Event Header:", eventHeader);
 
     const header = lines.splice(0, 1)[0].split(",");
 
