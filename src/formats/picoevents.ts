@@ -16,6 +16,8 @@ function clean(value: string | undefined): string | undefined {
 
 export class PicoeventsFormat implements Format {
   parse(text: string):Competition {
+    console.log("Parsing Picoevents format");
+
     // convert CSV to JSON
     const categories: { [key: string]: Category } = {};
 
@@ -31,7 +33,7 @@ export class PicoeventsFormat implements Format {
       categories: [],
     };
 
-    console.log("Event Header:", eventHeader);
+    console.warn("Event Header:", eventHeader);
 
     const header = lines.splice(0, 1)[0].split(",");
 
