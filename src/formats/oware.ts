@@ -76,7 +76,7 @@ export class OwareFormat implements Format {
       .filter((line) => line.trim().length > 0)
       .forEach(function (line) {
         var cols = line.split(";");
-        if (cols.length === 4) {
+        if (cols.length < 50) {
           category = parseCategory(cols);
           competition.categories.push(category);
         } else if (!category) {
