@@ -79,6 +79,8 @@ export class OwareFormat implements Format {
         if (cols.length === 4) {
           category = parseCategory(cols);
           competition.categories.push(category);
+        } else if (!category) {
+          console.warn("Runner found before category definition, skipping:", line);
         } else {
           category.runners.push(parseRunner(cols, category.name, ++idx));
         }
