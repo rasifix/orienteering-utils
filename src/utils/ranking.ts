@@ -223,7 +223,7 @@ export function parseRanking(runners: Runner[]): Ranking {
   const idealTime = Object.keys(legs)
     .map((code) => legs[code].idealSplit)
     .filter((time) => time !== undefined)
-    .reduce(sum);
+    .reduce(sum, 0);
 
   // each leg's weight is calculated regarding as a ratio of the ideal split time to the ideal time
   Object.keys(legs).forEach((code) => {
