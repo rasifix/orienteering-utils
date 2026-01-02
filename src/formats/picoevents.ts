@@ -25,10 +25,10 @@ export class PicoeventsFormat implements Format {
 
     const result: Competition = {
       id: eventHeader[1],
-      name: eventHeader[2],
-      map: eventHeader[7],
-      date: eventHeader[3],
-      startTime: eventHeader[4],
+      name: clean(eventHeader[2]),
+      map: clean(eventHeader[7]),
+      date: clean(eventHeader[3]),
+      startTime: clean(eventHeader[4]),
       categories: [],
     };
 
