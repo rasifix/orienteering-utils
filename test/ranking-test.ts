@@ -44,7 +44,6 @@ describe("parseRanking()", () => {
     expect(runner.rank).to.equal(3);
     expect(runner.time).to.equal("48:00");
 
-    console.log(runner.splits);
     expect(runner.splits[0].code).to.equal("33");
     expect(runner.splits[0].time).to.equal(617);
     expect(runner.splits[0].leg.behind).to.equal(135);

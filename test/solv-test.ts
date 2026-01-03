@@ -60,6 +60,13 @@ describe("solv", function () {
         runner.fullName.should.equal("Elin Widemar");
         runner.rank.should.equal(1);
       });
+
+      it("Elin Widemar should have 35 splits", function () {
+        const runner = category.runners[0];
+        runner.splits.length.should.equal(35);
+        runner.splits[0].code.should.equal("46");
+        runner.splits[34].code.should.equal("Zi");
+      });
     });
   });
 });
