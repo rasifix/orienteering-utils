@@ -106,6 +106,7 @@ export class SolvFormat implements Format {
         runner.splits.push({ code: tokens[i], time: time });
       }
 
+      console.log("adding Zi split for runner " + runner.fullName, runner.time);
       runner.splits.push({ code: "Zi", time: runner.time });
 
       category.runners.push(runner);
