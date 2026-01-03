@@ -75,7 +75,7 @@ export class SolvFormat implements Format {
 
       if (tokens.length - 12 < category.controls * 2) {
         // some crappy SOLV data...
-        console.log(
+        console.debug(
           "fix crappy data from SOLV - not enough tokens on line for runner " +
             runner.fullName
         );
@@ -106,7 +106,6 @@ export class SolvFormat implements Format {
         runner.splits.push({ code: tokens[i], time: time });
       }
 
-      console.log("adding Zi split for runner " + runner.fullName, runner.time);
       runner.splits.push({ code: "Zi", time: runner.time });
 
       category.runners.push(runner);
