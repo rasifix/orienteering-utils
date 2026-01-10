@@ -35,7 +35,7 @@ export class PicoeventsFormat implements Format {
     const header = lines.splice(0, 1)[0].split(",");
 
     const sortKeyIdx = header.indexOf("[SORTKEY]");
-    const statusIdx = header.indexOf("[IOFRESSTATTEXT]");
+    const statusIdx = header.indexOf("[RESPERSIDX]");
     const startTimeIdx = header.indexOf("[STARTFULLPREC]");
     const noOfSplitsIdx = header.indexOf("[NOFSPLITS]");
     const termIdx = header.indexOf("[TERM]");
@@ -72,7 +72,7 @@ export class PicoeventsFormat implements Format {
       }
 
       const status = tokens[statusIdx];
-      if (status !== "OK") {
+      if (status !== "5" && status !== "2") {
         return;
       }
 
