@@ -11,4 +11,5 @@ describe('all tests', function() {
     importTest('solv', './solv-test.ts');
     importTest('kraemer', './kraemer-test.ts');
     importTest('ranking', './ranking-test.ts');
+    importTest('butterfly', './butterfly-oware-test.ts');
 });

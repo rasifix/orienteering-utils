@@ -132,6 +132,9 @@ export interface RankingRunner {
   // the category of this runner
   category: string;
 
+  // the course of this runner (if multiple courses in category)
+  course?: string;
+
   // the overall rank of this runner
   rank?: number;
 
@@ -361,6 +364,45 @@ export function parseRanking(runners: Runner[]): Ranking {
   // calculate the overall rank
   rank(rankingRunners);
 
+  // assign course property
+  const runnerToCourse = new Map<string, string>();
+  courses.forEach(course => {
+    course.runners.forEach(runnerId => {
+      runnerToCourse.set(runnerId, course.code);
+    });
+  });
+
+  const categoryGroups = new Map<string, RankingRunner[]>();
+  rankingRunners.forEach(runner => {
+    if (!categoryGroups.has(runner.category)) {
+      categoryGroups.set(runner.category, []);
+    }
+    categoryGroups.get(runner.category)!.push(runner);
+  });
+
+  categoryGroups.forEach((runnersInCat, category) => {
+    const courseCodes = new Set<string>();
+    runnersInCat.forEach(runner => {
+      const courseCode = runnerToCourse.get(runner.id);
+      if (courseCode) {
+        courseCodes.add(courseCode);
+      }
+    });
+    if (courseCodes.size > 1) {
+      const sortedCourses = Array.from(courseCodes).sort();
+      const courseMap = new Map<string, string>();
+      sortedCourses.forEach((code, index) => {
+        courseMap.set(code, category + String.fromCharCode(65 + index)); // A, B, C...
+      });
+      runnersInCat.forEach(runner => {
+        const courseCode = runnerToCourse.get(runner.id);
+        if (courseCode) {
+          runner.course = courseMap.get(courseCode);
+        }
+      });
+    }
+  });
+
   Object.values(legs).forEach((leg) => {
     const ideal = leg.idealSplit!;
     const min = leg.runners.filter((runner) => !isNaN(runner.split) && runner.split !== undefined).map((runner) => runner.split).reduce((min, split) => Math.min(min, split - ideal), Number.MAX_VALUE);
@@ -402,6 +444,7 @@ function defineCourses(runners: Runner[]): Course[] {
       courses[course].runners.push(runner.id);
     }
   });
+  console.log("defined courses: ", Object.keys(courses));
   return Object.keys(courses).map((key) => courses[key]);
 }
 
