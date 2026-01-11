@@ -47,7 +47,7 @@ export class PicoeventsFormat implements Format {
     const runtimeNetIdx = header.indexOf("[RUNTIMENET]");
 
     lines.forEach((line, idx) => {
-      const tokens = line.split(",");
+      const tokens = parseCSVLine(line);
       if (tokens.length < 50) {
         return;
       }
@@ -72,7 +72,6 @@ export class PicoeventsFormat implements Format {
       }
 
       const status = tokens[statusIdx];
-      console.log(`Parsing runner ${idx + 1}: ${tokens[firstNameIdx]} ${tokens[familyNameIdx]} with status ${status} in category ${name}`);
       if (status !== "5" && status !== "2") {
         return;
       }
@@ -117,4 +116,37 @@ export class PicoeventsFormat implements Format {
   check(text: string) {
     return text.startsWith("BasicData,");
   }
+}
+
+function parseCSVLine(line: string): string[] {
+  const fields: string[] = [];
+  let current = '';
+  let inQuotes = false;
+  let i = 0;
+
+  while (i < line.length) {
+    const char = line[i];
+    if (char === '"') {
+      if (inQuotes && i + 1 < line.length && line[i + 1] === '"') {
+        // Escaped quote
+        current += '"';
+        i++; // Skip next quote
+      } else {
+        // Toggle quote state
+        inQuotes = !inQuotes;
+      }
+    } else if (char === ',' && !inQuotes) {
+      // Field separator
+      fields.push(current);
+      current = '';
+    } else {
+      current += char;
+    }
+    i++;
+  }
+
+  // Add the last field
+  fields.push(current);
+
+  return fields;
 }

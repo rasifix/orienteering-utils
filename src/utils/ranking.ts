@@ -235,7 +235,7 @@ export function parseRanking(runners: Runner[]): Ranking {
       leg.weight = leg.idealSplit / idealTime;
     }
     if (!leg.weight || isNaN(leg.weight)) {
-      console.log("invalid weight for leg ", code, leg.idealSplit, idealTime);
+      console.warn("invalid weight for leg ", code, leg.idealSplit, idealTime);
     }
   });
 
@@ -327,7 +327,7 @@ export function parseRanking(runners: Runner[]): Ranking {
       }
 
       if (!times || times.length === 0) {
-        console.log(
+        console.warn(
           "no times at position ",
           split.position,
           split.weight,
@@ -444,7 +444,6 @@ function defineCourses(runners: Runner[]): Course[] {
       courses[course].runners.push(runner.id);
     }
   });
-  console.log("defined courses: ", Object.keys(courses));
   return Object.keys(courses).map((key) => courses[key]);
 }
 
@@ -594,11 +593,11 @@ function defineLegProperties(legs: RunnerLegs) {
       leg.idealSplit = Math.round(selected.reduce(sum, 0) / selected.length);
 
       if (leg.idealSplit < 0 || isNaN(leg.idealSplit)) {
-        console.log("invalid ideal split calculated for leg " + code, leg.idealSplit, selected);
+        console.warn("invalid ideal split calculated for leg " + code, leg.idealSplit, selected);
         leg.idealSplit = 30;
       }
     } else {
-      console.log("no valid splits for leg " + code + " found, setting ideal split to 30s");
+      console.warn("no valid splits for leg " + code + " found, setting ideal split to 30s");
       leg.idealSplit = 30;
     }
 
@@ -625,7 +624,7 @@ function defineLegProperties(legs: RunnerLegs) {
         if (leg.idealSplit) {
           runner.performanceIndex = Math.round(((1.0 * leg.idealSplit) / runner.split) * 100);
         } else {
-          console.log("cannot calculate performance index for runner ", runner.fullName, " on leg ", code);
+          console.warn("cannot calculate performance index for runner ", runner.fullName, " on leg ", code);
         }
       });
     }
