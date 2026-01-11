@@ -72,6 +72,7 @@ export class PicoeventsFormat implements Format {
       }
 
       const status = tokens[statusIdx];
+      console.log(`Parsing runner ${idx + 1}: ${tokens[firstNameIdx]} ${tokens[familyNameIdx]} with status ${status} in category ${name}`);
       if (status !== "5" && status !== "2") {
         return;
       }
