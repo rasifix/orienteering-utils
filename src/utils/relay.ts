@@ -15,17 +15,6 @@ export interface Team {
 }
 
 /**
- * Select the runners having the same base category.
- * 
- * @param runners all the runners to filter
- * @param category the base category to filter by
- * @returns a filtered list of runners
- */
-export function selectRunnersOfCategory(runners: Runner[], category: string): Runner[] {
-    return runners.filter(runner => runner.baseCategory === category);
-}
-
-/**
  * Extract all unique teams from the given runners.
  * 
  * @param runners the runners to extract teams from
@@ -78,7 +67,6 @@ export function parseRelayRanking(runners: Runner[]): Ranking {
             fullName: teamRunners.map(r => r.fullName).join(' / '),
             startTime: firstRunner.startTime,
             startNumber: startNumber,
-            baseCategory: firstRunner.baseCategory,
             team: firstRunner.team,
             splits: []
         };
