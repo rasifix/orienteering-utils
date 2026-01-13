@@ -14,7 +14,6 @@ export interface Runner {
   startTime: string;
   startNumber?: string;
   runOrLeg?: number;
-  baseCategory?: string;
   team?: string;
   splits: Split[];
 }

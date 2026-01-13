@@ -7,4 +7,5 @@ export interface Competition {
     date: string;
     startTime: string;
     categories: Category[];
+    relay?: boolean;
 }

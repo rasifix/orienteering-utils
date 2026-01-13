@@ -57,7 +57,11 @@ export class PicoeventsFormat implements Format {
         return;
       }
 
-      const name = tokens[9];
+      if (idx === 0) {
+        result.relay = tokens[0].endsWith("=R");
+      }
+
+      const name = tokens[baseClassIdx];
 
       if (name.indexOf("TW") !== -1 || name.indexOf("TM") !== -1) {
         return;
@@ -93,7 +97,6 @@ export class PicoeventsFormat implements Format {
         startTime: formatTime(startTime),
         startNumber: clean(tokens[startNumIdx]),
         runOrLeg: tokens[runOrLegIdx] ? parseInt(tokens[runOrLegIdx]) : undefined,
-        baseCategory: clean(tokens[baseClassIdx]),
         team: clean(tokens[teamIdx]),
         splits: [],
       };
