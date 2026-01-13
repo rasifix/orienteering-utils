@@ -12,6 +12,10 @@ export interface Runner {
   club?: string;
   time?: string;
   startTime: string;
+  startNumber?: string;
+  runOrLeg?: number;
+  baseCategory?: string;
+  team?: string;
   splits: Split[];
 }
 

@@ -46,6 +46,11 @@ export class PicoeventsFormat implements Format {
     const clubIdx = header.indexOf("[CLUB]");
     const runtimeNetIdx = header.indexOf("[RUNTIMENET]");
 
+    const startNumIdx = header.indexOf("[STARTNUM]");
+    const runOrLegIdx = header.indexOf("[RUNORLEG]");
+    const baseClassIdx = header.indexOf("[BASECLASS]"); 
+    const teamIdx = header.indexOf("[GROUPNAME]");
+
     lines.forEach((line, idx) => {
       const tokens = parseCSVLine(line);
       if (tokens.length < 50) {
@@ -86,6 +91,10 @@ export class PicoeventsFormat implements Format {
         club: clean(tokens[clubIdx]),
         time: formatTime(parseInt(tokens[runtimeNetIdx])),
         startTime: formatTime(startTime),
+        startNumber: clean(tokens[startNumIdx]),
+        runOrLeg: tokens[runOrLegIdx] ? parseInt(tokens[runOrLegIdx]) : undefined,
+        baseCategory: clean(tokens[baseClassIdx]),
+        team: clean(tokens[teamIdx]),
         splits: [],
       };
 
@@ -103,14 +112,8 @@ export class PicoeventsFormat implements Format {
     return result;
   }
 
-  serialize(event: Competition) {
-    var result =
-      `BasicData,${event.id},"${event.name}",${event.date},${event.startTime},,,"${event.map}",\n`;
-    result += "EXTCLASS=[DATATYPE],[SORTKEY],[ACTITEM],[NOFITEMS],[POINTER],[POSSPLITS],[RUNORLEG],[CLASSSORT],[BASECLASS],[FULLCLASS],[SUBSTCLASS],[COURSE],[MULTIHEATNUM],[REGTIME],[ISCLIQUE],[FAMILYNAME],[FIRSTNAME],[YOB],[SEX],[SEXLOC],[ZIP],[TOWN],[REGION],[COUNTRY],[FEDNR],[CLUB],[CLUBID],[NATION],[NATIONCODE],[IOFID],[RANKING],[GROUPNAME],[GROUPCLUB],[FOREIGNKEY],[REFPERS],[REFHEAT],[REFGRP],[REFEXT],[CARDHASDATA],[CARDNUM],[CARDNUMORIG],[RFID],[STARTNUM],[CLASSSTA],[COMBINATION],[DATEH0],[TIMEPREC],[STARTTIMELIST],[STARTTIMEGATE],[STARTTIMELATE],[STARTFULLPREC],[FINISHFULLPREC],[STARTPRECADJ],[FINISHPRECADJ],[RUNTIMEEFF],[RUNTIMENET],[RANKNET],[BEHINDNET],[PENALTY],[CREDIT],[NEUTRAL],[POINTS],[TIMEUSERMOD],[CARDUSERMOD],[RESPERSIDX],[RESCARDIDX],[IOFRESSTATTEXT],[INFOALL],[INFOMAND],[NOTCLASSTEXT],[RANKTEXT],[RESULTTEXT],[BEHINDTEXT],[PENCRENEUTTEXT],[SCHEDULED],[STARTED],[FINISHED],[SLIADDTEXT],[RESADDTEXT],[RENMERGINFO],[LIVEOFFSET],[LIVEINVALID1],[LIVEINVALID2],[LIVEINVALID3],[LEGMASSSTART],[LEGMAXTIMELIMIT],[LEGMAXTIMENCLA],[RELAYSTARTTIME],[RELCUMRUNTIMEEFF],[RELCUMRUNTIMENET],[RELCUMRANKNET],[RELCUMBEHINDNET],[RELCUMRANKTEXT],[RELCUMRESULTTEXT],[RELCUMBEHINDTEXT],[RELCUMPERSRESIDX],[RELCUMIOFSTATTEXT],[RELCUMINFOALL],[RELCUMINFOMAND],[RELCUMNOTCLATEXT],[RELCUMMASTAFLAG],[RELCUMSTARTED],[RELCUMFINISHED],[RELCUMORDERRES],[RELCUMSPARE2],[RELCUMSPARE3],[EXCLUDED],[NEGRUNTIME],[CLASSOKNOTREADY],[RESULTINVALID],[DOPSTATOK],[SLIORDER],[SORTORDERRES],[SUBSECRUNTIMENET],[STARTTIMEEXT],[FINISHTIMEEXT],[RUNTIMENETFULLPREC],[IMPORTGROUPID],[IMPORTUSER],[HIDETIME],[PAID],[RESERVE8],[RESERVE7],[RESERVE6],[RESERVE5],[RESERVE4],[LASTUPDATE],[MISSLISTCODE],[EXTRALISTCODE],[EXTRALISTTIME],[RADIOLISTCODE],[NOFSPLITS],[NOFSPLITPARAMS],[SPLITTYPE],[SPLITSTATUS],[TERM]\n";
-
-    // FIXME: implement serialization of runners
-
-    return result;
+  serialize(event: Competition): string {
+    throw new Error("format does not implement serialization");
   }
 
   check(text: string) {
