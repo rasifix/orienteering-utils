@@ -67,7 +67,7 @@ function assignLegInfoToSplits(runners: RankingRunner[], legs: RunnerLegs): void
         let leg = legs[split.legCode];
 
         if (!leg) {
-          throw "leg with code " + split.leg + " not defined!";
+          throw "leg with code " + split.legCode + " not defined!";
         }
 
         split.legCode = leg.code;
@@ -548,7 +548,6 @@ function defineLegs(runners: RankingRunner[]) {
   
   runners.forEach((runner) => {
     runner.splits
-      //.filter((s) => validTime(s.time))
       .forEach((split, idx) => {
         const from = idx === 0 ? "St" : runner.splits[idx - 1].code;
         const to = split.code;
@@ -593,6 +592,7 @@ function defineLegProperties(legs: RunnerLegs) {
 
     // calculate the ideal time: take up to 5 fastest on that leg
     let selected = leg.runners
+      .filter((runner) => runner.split > 0)
       .slice(0, Math.min(leg.runners.length, 5))
       .map((runner) => runner.split);
 

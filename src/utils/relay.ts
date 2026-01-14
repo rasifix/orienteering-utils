@@ -65,6 +65,7 @@ export function parseRelayRanking(runners: Runner[]): Ranking {
             id: firstRunner.id,
             category: firstRunner.category,
             fullName: teamRunners.map(r => r.fullName).join(' / '),
+            club: teamRunners.map(r => r.club).join(' / '),
             startTime: firstRunner.startTime,
             startNumber: startNumber,
             team: firstRunner.team,
