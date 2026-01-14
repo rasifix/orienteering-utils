@@ -73,6 +73,7 @@ export function parseRelayRanking(runners: Runner[]): Ranking {
         
         // Combine splits from all legs
         let accumulatedTime = 0;
+        let previousValid = true
         
         teamRunners.forEach(runner => {
             runner.splits.forEach(split => {
@@ -97,10 +98,11 @@ export function parseRelayRanking(runners: Runner[]): Ranking {
                     accumulatedTime += runnerTotalTime;
                 }
             }
+            previousValid = previousValid && (runner.time !== undefined) && parseTime(runner.time) !== undefined;
         });
         
         // Set the final combined time
-        combinedRunner.time = formatTime(accumulatedTime);
+        combinedRunner.time = previousValid ? formatTime(accumulatedTime) : "DSQ";
         
         combinedRunners.push(combinedRunner);
     });
