@@ -141,6 +141,12 @@ export interface RankingRunner {
   // the full name of this runner
   fullName: string; 
 
+  // the team of this runner (relevant for relay and team events)
+  team?: string;
+
+  // the leg or run number of this runner (relevant for relay events)
+  legOrRun?: number;
+
   // the overall time of this runner
   time?: string; 
 
@@ -459,6 +465,8 @@ function defineRunners(runners:Runner[]): RankingRunner[] {
       category: runner.category,
       rank: undefined,
       fullName: runner.fullName,
+      team: runner.team,
+      legOrRun: runner.runOrLeg,
       time: runner.time,
       yearOfBirth: runner.yearOfBirth,
       city: runner.city,
