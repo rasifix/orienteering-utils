@@ -336,7 +336,6 @@ export function parseRanking(runners: Runner[]): Ranking {
         console.warn(
           "no times at position ",
           split.position,
-          split.weight,
           " for runner ",
           runner.fullName,
           runner.time,
