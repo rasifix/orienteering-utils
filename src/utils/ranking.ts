@@ -75,14 +75,24 @@ function assignLegInfoToSplits(runners: RankingRunner[], legs: RunnerLegs): void
         let legRunner = leg.runners.find((r) => r.id === runner.id);
 
         if (legRunner) {
+          split.leg.idealSplit = leg.idealSplit;
           split.leg.idealBehind = leg.idealSplit && legRunner.split - leg.idealSplit;
           split.leg.behind = legRunner.splitBehind;
           split.leg.rank = legRunner.splitRank;
           split.performanceIndex = legRunner.performanceIndex;
+        } else {
+          console.warn("runner ", runner.fullName, " not found in leg ", leg.code);
         }
-        split.weight = leg.weight;
       });
     runner.errorTime = errorTime(runner, { thresholdRelative: 1.2, thresholdAbsolute: 10 });
+
+    const idealTime = runner.splits.reduce((sum, split) => {
+      return sum + (split.leg.idealSplit || 0);
+    }, 0);
+
+    runner.splits.forEach((split) => {
+      split.weight = split.leg.idealSplit! / idealTime;
+    });
   });
 }
 
@@ -216,6 +226,7 @@ export interface RankingInfo {
 }
 
 export interface SplitInfo extends RankingInfo {
+  idealSplit: number;
   performanceIndex?: number;
 }
 
@@ -228,14 +239,8 @@ export function parseRanking(runners: Runner[]): Ranking {
   // prepare auxiliary data about the legs needed to calculate ideal times, weights, ...
   const legs = defineLegs(rankingRunners);
 
-  // calculate the ideal time [s]
-  const idealTime = Object.keys(legs)
-    .map((code) => legs[code].idealSplit)
-    .filter((time) => time !== undefined)
-    .reduce(sum, 0);
-
   // each leg's weight is calculated regarding as a ratio of the ideal split time to the ideal time
-  Object.keys(legs).forEach((code) => {
+  /*Object.keys(legs).forEach((code) => {
     let leg = legs[code];
     if (leg.idealSplit && idealTime > 0) {
       leg.weight = leg.idealSplit / idealTime;
@@ -243,14 +248,15 @@ export function parseRanking(runners: Runner[]): Ranking {
     if (!leg.weight || isNaN(leg.weight)) {
       console.warn("invalid weight for leg ", code, leg.idealSplit, idealTime);
     }
-  });
+  });*/
 
-  // now assing the leg information (such as idealTime, weight, ...) to the individual splits of the runners
+  // now assing the leg information (such as idealTime, ...) to the individual splits of the runners
   assignLegInfoToSplits(rankingRunners, legs);
 
   rankingRunners.forEach((runner) => {
     let behind = 0;
     let weightSum = 0;
+
     runner.splits.forEach((split) => {
       behind += split.leg.idealBehind!;
       split.overall = {
@@ -282,6 +288,7 @@ export function parseRanking(runners: Runner[]): Ranking {
       let idx = 0;
       let weightSum = 0;
       let prevTime = 0;
+
       for (idx = 0; idx < runner.splits.length; idx++) {
         let split = runner.splits[idx];
         if (weightSum + split.weight! >= pos) {
@@ -319,9 +326,12 @@ export function parseRanking(runners: Runner[]): Ranking {
     return result;
   };
 
+  // now calculate the split ranks and behinds for each split of each runner
+
   rankingRunners.forEach((runner) => {
     runner.splits.forEach((split) => {
-      const times = timesAtPosition(split.position)
+      const tap = timesAtPosition(split.position);
+      const times = tap
         .filter((entry) => entry.time && entry.time > 0)
         .map((entry) => {
           return { id: entry.id, time: entry.time! };
@@ -332,12 +342,12 @@ export function parseRanking(runners: Runner[]): Ranking {
         return;
       }
 
-      if (!times || times.length === 0) {
+      if (times.length === 0) {
         console.warn(
           "no times at position ",
           split.position,
           " for runner ",
-          runner.fullName,
+          runner.team || runner.fullName,
           runner.time,
           times.length
         );
@@ -503,7 +513,8 @@ function defineRunnerLegSplit(split: {
     leg: {
       rank: undefined,
       behind: 0,
-      idealBehind: undefined
+      idealBehind: undefined,
+      idealSplit: 0
     },
     overall: {
       rank: undefined,
