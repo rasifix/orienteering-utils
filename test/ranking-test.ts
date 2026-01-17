@@ -49,6 +49,6 @@ describe("parseRanking()", () => {
     expect(runner.splits[0].leg.behind).to.equal(135);
     expect(runner.splits[0].leg.rank).to.equal(16);
 
-    expect(ranking.legs.reduce((acc, leg) => acc + leg.weight!, 0)).to.equal(1.0, "Total leg weights should equal 1.0");
+    expect(ranking.runners[2].splits.reduce((acc, leg) => acc + leg.weight!, 0)).to.equal(1.0, "Total leg weights should equal 1.0");
   });
 });
