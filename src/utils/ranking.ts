@@ -262,7 +262,7 @@ export function parseRanking(runners: Runner[]): Ranking {
       split.overall = {
         behind: behind
       };
-      split.position = weightSum + split.weight!;
+      split.position = Math.min(1, weightSum + split.weight!);
 
       if (split.weight) {
         weightSum += split.weight;
@@ -330,7 +330,7 @@ export function parseRanking(runners: Runner[]): Ranking {
 
   rankingRunners.forEach((runner) => {
     runner.splits.forEach((split) => {
-      const tap = timesAtPosition(split.position);
+      const tap = timesAtPosition(Math.min(1, split.position));
       const times = tap
         .filter((entry) => entry.time && entry.time > 0)
         .map((entry) => {
