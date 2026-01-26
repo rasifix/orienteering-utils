@@ -329,7 +329,7 @@ export function parseRanking(runners: Runner[]): Ranking {
   // now calculate the split ranks and behinds for each split of each runner
 
   rankingRunners.forEach((runner) => {
-    runner.splits.forEach((split) => {
+    runner.splits.forEach((split, splitIdx) => {
       const tap = timesAtPosition(Math.min(1, split.position));
       const times = tap
         .filter((entry) => entry.time && entry.time > 0)
@@ -370,7 +370,7 @@ export function parseRanking(runners: Runner[]): Ranking {
           split.overall.rank = rank;
           split.overall.behind = entry.time - fastestTime;
 
-          const prevIdealBehind = idx > 0 && runner.splits[idx -1] ? (runner.splits[idx - 1].overall.idealBehind || 0) : 0;
+          const prevIdealBehind = splitIdx > 0 ? (runner.splits[splitIdx - 1].overall.idealBehind || 0) : 0;
           split.overall.idealBehind = prevIdealBehind + split.leg.idealBehind!;
           break;
         }
