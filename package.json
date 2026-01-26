@@ -1,6 +1,6 @@
 {
   "name": "@rasifix/orienteering-utils",
-  "version": "2.0.72",
+  "version": "2.0.73",
   "description": "utility functions for orienteering result analyzis",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
