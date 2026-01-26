@@ -92,6 +92,18 @@ export function parseRelayRanking(runners: Runner[]): Ranking {
                 }
             });
             
+            // Verify that split times are increasing
+            let previousTime = 0;
+            for (const split of combinedRunner.splits) {
+                const splitTime = parseTime(split.time);
+                if (splitTime !== undefined && splitTime <= previousTime) {
+                    console.warn(`Split times are not increasing for team ${runner.team} at leg (${split.code}): ${split.time} <= ${formatTime(previousTime)}`);
+                }
+                if (splitTime !== undefined) {
+                    previousTime = splitTime;
+                }
+            }
+                        
             // Accumulate the total time of this leg for the next leg
             if (runner.time) {
                 const runnerTotalTime = parseTime(runner.time);
@@ -109,5 +121,5 @@ export function parseRelayRanking(runners: Runner[]): Ranking {
     });
     
     // Parse the ranking as usual
-    return parseRanking(combinedRunners);
+    return parseRanking(combinedRunners.filter(r => r.time !== undefined && r.time !== "DSQ"));
 }

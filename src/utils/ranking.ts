@@ -425,6 +425,20 @@ export function parseRanking(runners: Runner[]): Ranking {
     leg.spread = [min, max];
   });
 
+  // Check for anomalies in overall behind times
+  rankingRunners.forEach((runner) => {
+    for (let i = 1; i < runner.splits.length; i++) {
+      const currentSplit = runner.splits[i];
+      const prevSplit = runner.splits[i - 1];
+      if (currentSplit.overall.behind !== undefined && prevSplit.overall.behind !== undefined && currentSplit.splitTime !== undefined) {
+        const behindDiff = currentSplit.overall.behind - prevSplit.overall.behind;
+        if (behindDiff < -currentSplit.splitTime) {
+          console.warn(`Anomaly detected for runner ${runner.team} (ID: ${runner.id}) on split ${currentSplit.legCode}: overall behind decreased by ${-behindDiff}s, but split time is ${currentSplit.splitTime}s`);
+        }
+      }
+    }
+  });
+
   return {
     courses,
     runners: rankingRunners,
