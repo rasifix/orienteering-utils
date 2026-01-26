@@ -106,7 +106,7 @@ export class SolvFormat implements Format {
         runner.splits.push({ code: tokens[i], time: time });
       }
 
-      runner.splits.push({ code: "Zi", time: runner.time });
+      runner.splits.push({ code: "Zi", time: parseTime(runner.time) ? runner.time : undefined });
 
       category.runners.push(runner);
     });
