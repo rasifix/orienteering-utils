@@ -358,7 +358,6 @@ export function parseRanking(runners: Runner[]): Ranking {
 
       const fastestTime = times[0].time;
       const lastTime = fastestTime;
-      const idealSplitTime = times.slice(0, 5).reduce((sum, t) => sum + t.time!, 0) / Math.min(5, times.length);
 
       for (let idx = 0; idx < times.length; idx++) {
         const entry = times[idx];
