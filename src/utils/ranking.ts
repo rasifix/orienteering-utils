@@ -356,7 +356,10 @@ export function parseRanking(runners: Runner[]): Ranking {
 
       let rank = 1;
 
-      const lastTime = times[0].time;
+      const fastestTime = times[0].time;
+      const lastTime = fastestTime;
+      const idealSplitTime = times.slice(0, 5).reduce((sum, t) => sum + t.time!, 0) / Math.min(5, times.length);
+
       for (let idx = 0; idx < times.length; idx++) {
         const entry = times[idx];
 
@@ -365,11 +368,11 @@ export function parseRanking(runners: Runner[]): Ranking {
         }
 
         if (runner.id === entry.id) {
-          const idealSplitTime = times.slice(0, 5).reduce((sum, t) => sum + t.time!, 0) / Math.min(5, times.length);
-          const fastestTime = times[0].time;
           split.overall.rank = rank;
           split.overall.behind = entry.time - fastestTime;
-          split.overall.idealBehind = Math.round(entry.time - idealSplitTime);
+
+          const prevIdealBehind = idx > 0 && runner.splits[idx -1] ? (runner.splits[idx - 1].overall.idealBehind || 0) : 0;
+          split.overall.idealBehind = prevIdealBehind + split.leg.idealBehind!;
           break;
         }
       }
