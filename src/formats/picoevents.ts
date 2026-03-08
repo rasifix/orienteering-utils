@@ -49,6 +49,7 @@ export class PicoeventsFormat implements Format {
     const startNumIdx = header.indexOf("[STARTNUM]");
     const runOrLegIdx = header.indexOf("[RUNORLEG]");
     const baseClassIdx = header.indexOf("[BASECLASS]"); 
+    const fullClassIdx = header.indexOf("[FULLCLASS]");
     const teamIdx = header.indexOf("[GROUPNAME]");
 
     lines.forEach((line, idx) => {
@@ -61,7 +62,7 @@ export class PicoeventsFormat implements Format {
         result.relay = tokens[0].endsWith("=R");
       }
 
-      const name = tokens[baseClassIdx];
+      const name = tokens[baseClassIdx] || tokens[fullClassIdx];
 
       if (name.indexOf("TW") !== -1 || name.indexOf("TM") !== -1) {
         return;
