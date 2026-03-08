@@ -52,6 +52,8 @@ export class PicoeventsFormat implements Format {
     const fullClassIdx = header.indexOf("[FULLCLASS]");
     const teamIdx = header.indexOf("[GROUPNAME]");
 
+    let ids = 0;
+
     lines.forEach((line, idx) => {
       const tokens = parseCSVLine(line);
       if (tokens.length < 50) {
@@ -88,7 +90,7 @@ export class PicoeventsFormat implements Format {
 
       const startTime = parseInt(tokens[startTimeIdx]);
       const runner: Runner = {
-        id: tokens[sortKeyIdx] || "0",
+        id: tokens[sortKeyIdx] || "" + (++ids),
         category: name,
         fullName: clean(tokens[firstNameIdx]) + " " + clean(tokens[familyNameIdx]),
         yearOfBirth: tokens[yobIdx] || undefined,
